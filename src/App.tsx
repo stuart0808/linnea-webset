@@ -4,8 +4,9 @@ import {
   CalendarDays,
   Check,
   ChevronRight,
-  Clipboard,
   Code2,
+  Download,
+  ExternalLink,
   FileText,
   ListTodo,
   MessageCircle,
@@ -14,60 +15,85 @@ import {
 } from "lucide-react";
 import linneaIcon from "./assets/app/linnea-icon.png";
 import linneaHero from "./assets/pet/linnea-q.png";
+import happyImage from "./assets/pet/linnea_state/_Happy_.png";
 import idleImage from "./assets/pet/linnea_state/_Idle_.png";
+import reminderImage from "./assets/pet/linnea_state/_Reminder_.png";
+import restImage from "./assets/pet/linnea_state/_Rest_.png";
+import sleepyImage from "./assets/pet/linnea_state/_Sleepy_.png";
 import talkingImage from "./assets/pet/linnea_state/_Talking_.png";
 import thinkingImage from "./assets/pet/linnea_state/_Thinking_.png";
-import happyImage from "./assets/pet/linnea_state/_Happy_.png";
-import reminderImage from "./assets/pet/linnea_state/_Reminder_.png";
-import sleepyImage from "./assets/pet/linnea_state/_Sleepy_.png";
 import urgentImage from "./assets/pet/linnea_state/_Urgent_.png";
-import restImage from "./assets/pet/linnea_state/_Rest_.png";
 
 const themePresets = ["#5aa982", "#4d8fc8", "#d59a3a", "#c56c86", "#8a75c9", "#5c8f7a"];
-const installerPath = "D:\\code\\desktoppet\\release\\Linnea Setup 1.0.8.exe";
+const allReleasesUrl = "https://github.com/stuart0808/linnea-desktop-pet/releases/";
+
+const latestRelease = {
+  version: "v1.0.5",
+  date: "2026-05-09",
+  file: "Linnea-Setup-1.0.5.exe",
+  size: "110 MB",
+  notesUrl: "https://github.com/stuart0808/linnea-desktop-pet/releases/tag/v1.0.5",
+  downloadUrl: "https://github.com/stuart0808/linnea-desktop-pet/releases/download/v1.0.5/Linnea-Setup-1.0.5.exe"
+};
+
+const releaseHistory = [
+  ["v1.0.4", "2026-05-08", "Linnea.Setup.1.0.4.exe"],
+  ["v1.0.3", "2026-05-08", "Linnea.Setup.1.0.3.exe"],
+  ["v1.0.2", "2026-05-08", "Linnea.Setup.1.0.2.exe"],
+  ["v1.0.0", "2026-05-07", "Linnea.Setup.1.0.0.exe"],
+  ["v0.4.0", "2026-05-06", "Linnea.Setup.0.4.0.exe"],
+  ["v0.3.0", "2026-05-06", "Linnea.Setup.0.3.0.exe"]
+].map(([version, date, file]) => ({
+  version,
+  date,
+  file,
+  size: "110 MB",
+  notesUrl: `https://github.com/stuart0808/linnea-desktop-pet/releases/tag/${version}`,
+  downloadUrl: `https://github.com/stuart0808/linnea-desktop-pet/releases/download/${version}/${file}`
+}));
 
 const features = [
   {
     icon: MessageCircle,
-    title: "自然语言记录",
-    text: "直接告诉 Linnea 今天要做什么，她会把零散想法整理成可确认的任务草案。"
+    title: "Tell her what is on your mind",
+    text: "Type a quick note in natural language and Linnea turns it into a clean task draft you can review."
   },
   {
     icon: ListTodo,
-    title: "确认后写入待办",
-    text: "AI 先生成草案，用户确认后才保存，适合整理项目、标签、优先级和子任务。"
+    title: "Confirm before it becomes a task",
+    text: "Drafts stay editable until you approve them, so your list stays intentional instead of noisy."
   },
   {
     icon: CalendarDays,
-    title: "日历排程",
-    text: "把待办放到日、周、月视图里，区分截止时间和真正计划执行的时间。"
+    title: "Plan time, not just deadlines",
+    text: "Place work on a day, week, or month view and keep deadlines separate from scheduled focus time."
   },
   {
     icon: FileText,
-    title: "每日总结",
-    text: "复盘已完成、待关注和未来风险，帮助每天收尾时快速看清任务状态。"
+    title: "End the day with a clear picture",
+    text: "Review what moved, what is at risk, and what deserves attention tomorrow."
   },
   {
     icon: Wand2,
-    title: "全局选区工具",
-    text: "选中文字后快速总结、翻译或转成待办，减少在不同窗口之间来回切换。"
+    title: "Use selected text instantly",
+    text: "Summarize, translate, or turn selected text into a task without leaving the window you are working in."
   },
   {
     icon: Code2,
-    title: "Codex 工作流",
-    text: "拖拽文件进入隔离副本，再把代码任务交给 Codex 会话处理。"
+    title: "Start coding sessions from files",
+    text: "Drop files into Linnea and start a Codex session from an isolated workspace."
   }
 ];
 
 const states = [
-  { name: "Idle", image: idleImage, text: "安静陪伴，随时等待输入。" },
-  { name: "Talking", image: talkingImage, text: "对话与任务捕获进行中。" },
-  { name: "Thinking", image: thinkingImage, text: "正在整理草案和计划。" },
-  { name: "Happy", image: happyImage, text: "任务保存或完成后的反馈。" },
-  { name: "Reminder", image: reminderImage, text: "提醒到来时给出桌面提示。" },
-  { name: "Urgent", image: urgentImage, text: "突出展示临近或逾期事项。" },
-  { name: "Rest", image: restImage, text: "休息状态让桌面更轻松。" },
-  { name: "Sleepy", image: sleepyImage, text: "长时间空闲后的低打扰状态。" }
+  { name: "Idle", image: idleImage, text: "A quiet companion while you work." },
+  { name: "Talking", image: talkingImage, text: "Ready for a quick note or question." },
+  { name: "Thinking", image: thinkingImage, text: "Organizing drafts into useful structure." },
+  { name: "Happy", image: happyImage, text: "A small celebration when tasks move forward." },
+  { name: "Reminder", image: reminderImage, text: "A visible nudge when something needs attention." },
+  { name: "Urgent", image: urgentImage, text: "A stronger signal for tasks that cannot wait." },
+  { name: "Rest", image: restImage, text: "Low-key company during calmer moments." },
+  { name: "Sleepy", image: sleepyImage, text: "Less distraction when the day slows down." }
 ];
 
 function mixHex(color: string, base: string, baseWeight: number) {
@@ -94,7 +120,24 @@ function hexToRgba(color: string, alpha: number) {
 
 export function App() {
   const [accent, setAccent] = React.useState(themePresets[0]);
-  const [copied, setCopied] = React.useState(false);
+  const [route, setRoute] = React.useState(() => window.location.hash.replace("#", "") || "/");
+
+  React.useEffect(() => {
+    const updateRoute = () => setRoute(window.location.hash.replace("#", "") || "/");
+    window.addEventListener("hashchange", updateRoute);
+    return () => window.removeEventListener("hashchange", updateRoute);
+  }, []);
+
+  React.useEffect(() => {
+    if (route === "/download") {
+      window.scrollTo({ top: 0 });
+      return;
+    }
+    window.requestAnimationFrame(() => {
+      const target = document.getElementById(route === "/" ? "/" : route);
+      if (target) target.scrollIntoView({ block: "start" });
+    });
+  }, [route]);
 
   const themeStyle = React.useMemo(
     () => ({
@@ -107,68 +150,67 @@ export function App() {
     [accent]
   );
 
-  async function copyInstallerPath() {
-    try {
-      await navigator.clipboard.writeText(installerPath);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
-    }
-  }
+  const isDownloadPage = route === "/download";
 
   return (
     <main className="site" style={themeStyle}>
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="Linnea 首页">
+        <a className="brand" href="#/" aria-label="Linnea home">
           <img src={linneaIcon} alt="" />
           <span>Linnea</span>
         </a>
         <nav>
-          <a href="#features">功能</a>
-          <a href="#themes">主题</a>
-          <a href="#states">状态</a>
-          <a href="#local">本地运行</a>
+          <a href="#/features">Features</a>
+          <a href="#/themes">Themes</a>
+          <a href="#/states">Gallery</a>
+          <a className={isDownloadPage ? "active" : ""} href="#/download">Download</a>
         </nav>
       </header>
+      {isDownloadPage ? <DownloadPage /> : <HomePage accent={accent} setAccent={setAccent} />}
+    </main>
+  );
+}
 
-      <section id="top" className="hero section">
+function HomePage({ accent, setAccent }: { accent: string; setAccent(color: string): void }) {
+  return (
+    <>
+      <section id="/" className="hero section">
         <div className="hero-copy">
           <span className="eyebrow"><Sparkles size={16} /> Windows desktop pet assistant</span>
-          <h1>把桌宠、AI 待办和日程复盘放到同一个轻量助手里。</h1>
+          <h1>A tiny desktop companion for tasks, reminders, and daily planning.</h1>
           <p>
-            Linnea 是一个 Windows 桌面宠物应用。她可以陪你记录自然语言任务、确认待办草案、
-            安排日历、发送提醒，并把代码工作流交给 Codex。
+            Linnea stays on your desktop, helps you capture tasks in plain language, nudges you when it matters,
+            and gives your day a calmer rhythm.
           </p>
           <div className="hero-actions">
-            <button type="button" className="primary-action" onClick={copyInstallerPath}>
-              <Clipboard size={18} /> {copied ? "已复制安装包路径" : "复制本地安装包路径"}
-            </button>
-            <a className="secondary-action" href="#features">
-              查看功能 <ChevronRight size={18} />
+            <a className="primary-action" href="#/download">
+              <Download size={18} /> Download for Windows
+            </a>
+            <a className="secondary-action" href="#/features">
+              Explore features <ChevronRight size={18} />
             </a>
           </div>
-          <div className="local-path">{installerPath}</div>
+          <div className="release-note">Latest release: {latestRelease.version} for Windows x64.</div>
         </div>
 
-        <div className="hero-visual" aria-label="Linnea 桌宠展示">
+        <div className="hero-visual" aria-label="Linnea desktop pet preview">
           <div className="hero-card task-card">
             <Check size={16} />
-            <span>3 个待办已确认</span>
+            <span>3 tasks ready for today</span>
           </div>
-          <img className="hero-pet" src={linneaHero} alt="Q 版 Linnea 桌面宠物" />
+          <img className="hero-pet" src={linneaHero} alt="Q版 Linnea desktop pet" />
           <div className="hero-card reminder-card">
             <Bell size={16} />
-            <span>15:00 提醒交周报</span>
+            <span>15:00 reminder is set</span>
           </div>
         </div>
       </section>
 
-      <section id="features" className="section">
+      <section id="/features" className="section">
         <div className="section-heading">
           <span>Key Features</span>
-          <h2>从一句话到可执行计划</h2>
-          <p>页面结构参考简洁 SaaS 展示站，但内容围绕 Linnea 的桌面工作流重新设计。</p>
+          <h2>From a quick thought to a plan you can trust</h2>
+          <p>Linnea keeps task capture light, but still gives you control before anything enters your list.</p>
         </div>
         <div className="feature-grid">
           {features.map((feature) => {
@@ -187,30 +229,30 @@ export function App() {
       <section className="workflow section">
         <div className="section-heading">
           <span>Workflow</span>
-          <h2>Linnea 的日常整理路径</h2>
+          <h2>A simpler way to keep the day moving</h2>
         </div>
         <div className="workflow-steps">
-          {["说出任务", "生成草案", "安排日历", "总结复盘"].map((step, index) => (
+          {["Capture", "Review", "Schedule", "Reflect"].map((step, index) => (
             <article key={step}>
               <span>{index + 1}</span>
               <strong>{step}</strong>
               <p>
-                {index === 0 && "用自然语言把脑中的事项说出来。"}
-                {index === 1 && "AI 拆解为待办，等待你确认。"}
-                {index === 2 && "把任务放进具体执行时间块。"}
-                {index === 3 && "检查完成度、风险和明天重点。"}
+                {index === 0 && "Drop a thought into Linnea before it slips away."}
+                {index === 1 && "Edit the task draft and confirm only what you want."}
+                {index === 2 && "Choose when the work should actually happen."}
+                {index === 3 && "See progress, risks, and what deserves focus next."}
               </p>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="themes" className="theme-section section">
+      <section id="/themes" className="theme-section section">
         <div className="theme-copy">
           <span className="eyebrow">Theme Preview</span>
-          <h2>选择应用里同款主题色</h2>
-          <p>点击色块后，页面的按钮、边框、光影和预览区域会即时切换，模拟 Linnea 工作窗口里的主题偏好。</p>
-          <div className="theme-picker" aria-label="选择主题色">
+          <h2>Make Linnea feel at home on your desktop</h2>
+          <p>Choose a soft accent color and preview how Linnea's workspace changes around it.</p>
+          <div className="theme-picker" aria-label="Choose theme color">
             {themePresets.map((color) => (
               <button
                 key={color}
@@ -218,7 +260,7 @@ export function App() {
                 className={accent === color ? "active" : ""}
                 style={{ backgroundColor: color }}
                 onClick={() => setAccent(color)}
-                aria-label={`切换主题色 ${color}`}
+                aria-label={`Switch theme color ${color}`}
               />
             ))}
           </div>
@@ -231,43 +273,114 @@ export function App() {
               <span />
             </div>
             <div className="preview-content">
-              <strong>今天的计划</strong>
-              <p>整理客户反馈，15:00 交周报。</p>
-              <button type="button">确认写入待办</button>
+              <strong>Today's plan</strong>
+              <p>Review notes, prepare the weekly update, and take a real break.</p>
+              <button type="button">Confirm task draft</button>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="states" className="section">
+      <section id="/states" className="section">
         <div className="section-heading">
           <span>Linnea States</span>
-          <h2>不同状态都可以成为网页上的展示资产</h2>
+          <h2>A desktop companion with visible moods</h2>
+          <p>Linnea changes expression as you talk, plan, complete tasks, or receive reminders.</p>
         </div>
         <div className="state-grid">
           {states.map((state) => (
             <article className="state-card" key={state.name}>
-              <img src={state.image} alt={`Linnea ${state.name} 状态`} />
+              <img src={state.image} alt={`Linnea ${state.name} state`} />
               <strong>{state.name}</strong>
               <p>{state.text}</p>
             </article>
           ))}
         </div>
       </section>
+    </>
+  );
+}
 
-      <section id="local" className="local-section section">
-        <div>
-          <span className="eyebrow">Local Build</span>
-          <h2>本地使用方式</h2>
-          <p>这个展示站是独立项目，不会修改桌面应用源码。桌面应用仍在 `D:\code\desktoppet` 中构建。</p>
+function DownloadPage() {
+  return (
+    <>
+      <section className="download-hero section">
+        <div className="download-copy">
+          <span className="eyebrow"><Download size={16} /> Windows download</span>
+          <h1>Download Linnea for Windows</h1>
+          <p>
+            Install the latest Windows build and bring Linnea to your desktop for task capture,
+            reminders, planning, and daily review.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-action" href={latestRelease.downloadUrl}>
+              <Download size={18} /> Download for Windows
+            </a>
+            <a className="secondary-action" href={latestRelease.notesUrl} target="_blank" rel="noreferrer">
+              Release notes <ExternalLink size={17} />
+            </a>
+          </div>
         </div>
-        <div className="command-panel">
-          <code>cd D:\code\desktoppet</code>
-          <code>npm install</code>
-          <code>npm run dev</code>
-          <code>npm run dist:win</code>
+        <div className="latest-card">
+          <img src={happyImage} alt="Happy Linnea" />
+          <span>Latest version</span>
+          <strong>{latestRelease.version}</strong>
+          <dl>
+            <div><dt>Platform</dt><dd>Windows x64</dd></div>
+            <div><dt>Installer</dt><dd>{latestRelease.file}</dd></div>
+            <div><dt>Size</dt><dd>{latestRelease.size}</dd></div>
+            <div><dt>Published</dt><dd>{latestRelease.date}</dd></div>
+          </dl>
         </div>
       </section>
-    </main>
+
+      <section className="install-section section">
+        <div className="section-heading">
+          <span>Get started</span>
+          <h2>Install in three steps</h2>
+        </div>
+        <div className="install-steps">
+          {["Download the installer", "Run the .exe file", "Launch Linnea from Windows"].map((step, index) => (
+            <article key={step}>
+              <span>{index + 1}</span>
+              <strong>{step}</strong>
+              <p>
+                {index === 0 && "Use the latest Windows installer from GitHub Releases."}
+                {index === 1 && "Follow the setup wizard and choose where Linnea should be installed."}
+                {index === 2 && "Start Linnea and configure reminders, theme, and AI settings."}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="release-section section">
+        <div className="section-heading release-heading">
+          <div>
+            <span>Version history</span>
+            <h2>Previous Windows builds</h2>
+            <p>Choose an older installer if you need to compare behavior or return to a previous version.</p>
+          </div>
+          <a className="secondary-action" href={allReleasesUrl} target="_blank" rel="noreferrer">
+            All releases <ExternalLink size={17} />
+          </a>
+        </div>
+        <div className="release-list">
+          {releaseHistory.map((release) => (
+            <article className="release-row" key={release.version}>
+              <div>
+                <strong>{release.version}</strong>
+                <span>{release.date} · {release.size} · Windows x64</span>
+              </div>
+              <span className="release-file">{release.file}</span>
+              <div className="release-actions">
+                <a href={release.downloadUrl}>Download</a>
+                <a href={release.notesUrl} target="_blank" rel="noreferrer">Notes</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
