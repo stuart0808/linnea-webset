@@ -28,15 +28,16 @@ const themePresets = ["#5aa982", "#4d8fc8", "#d59a3a", "#c56c86", "#8a75c9", "#5
 const allReleasesUrl = "https://github.com/stuart0808/linnea-desktop-pet/releases/";
 
 const latestRelease = {
-  version: "v1.0.5",
-  date: "2026-05-09",
-  file: "Linnea-Setup-1.0.5.exe",
+  version: "v1.0.9",
+  date: "2026-05-10",
+  file: "Linnea-Setup-1.0.9.exe",
   size: "110 MB",
-  notesUrl: "https://github.com/stuart0808/linnea-desktop-pet/releases/tag/v1.0.5",
-  downloadUrl: "https://github.com/stuart0808/linnea-desktop-pet/releases/download/v1.0.5/Linnea-Setup-1.0.5.exe"
+  notesUrl: "https://github.com/stuart0808/linnea-desktop-pet/releases/tag/v1.0.9",
+  downloadUrl: "https://github.com/stuart0808/linnea-desktop-pet/releases/download/v1.0.9/Linnea-Setup-1.0.9.exe"
 };
 
 const releaseHistory = [
+  ["v1.0.5", "2026-05-09", "Linnea-Setup-1.0.5.exe"],
   ["v1.0.4", "2026-05-08", "Linnea.Setup.1.0.4.exe"],
   ["v1.0.3", "2026-05-08", "Linnea.Setup.1.0.3.exe"],
   ["v1.0.2", "2026-05-08", "Linnea.Setup.1.0.2.exe"],
